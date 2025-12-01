@@ -21,12 +21,13 @@ func printLogo() {
 
 var solutionImpls = []solutions.Solution{
 	solutions.Day00{},
+	solutions.Day01{},
 }
 
 func main() {
 	// Configure it
 	day := ""       // last by default
-	label := "test" // test | real
+	label := "real" // test | real
 
 	printLogo()
 
