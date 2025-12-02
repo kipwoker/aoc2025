@@ -22,6 +22,7 @@ func printLogo() {
 var solutionImpls = []solutions.Solution{
 	solutions.Day00{},
 	solutions.Day01{},
+	solutions.Day02{},
 }
 
 func main() {

@@ -16,7 +16,7 @@ type Instruction struct {
 	Value   int
 }
 
-func parse(input string) []Instruction {
+func parse01(input string) []Instruction {
 	lines := strings.Split(input, "\n")
 	ins := make([]Instruction, 0, len(lines))
 	for _, line := range lines {
@@ -37,7 +37,7 @@ func isChanded(prev, current int) bool {
 }
 
 func (d Day01) Execute1(input string) string {
-	ins := parse(input)
+	ins := parse01(input)
 	pos := 50
 	mod := 100
 
@@ -60,7 +60,7 @@ func (d Day01) Execute1(input string) string {
 }
 
 func (d Day01) Execute2(input string) string {
-	ins := parse(input)
+	ins := parse01(input)
 	pos := 50
 	mod := 100
 
