@@ -22,3 +22,51 @@ func sign(x int) int {
 	}
 	return 0
 }
+
+type Point struct {
+	X, Y int
+}
+
+func (p Point) Hash() uint64 {
+	return uint64(p.X)<<32 | uint64(p.Y)
+}
+
+func (p Point) Equals(other Point) bool {
+	return p.X == other.X && p.Y == other.Y
+}
+
+func (p Point) GetNeighbors8() []Point {
+	return []Point{
+		{p.X - 1, p.Y - 1},
+		{p.X - 1, p.Y + 1},
+		{p.X - 1, p.Y},
+		{p.X, p.Y - 1},
+		{p.X, p.Y + 1},
+		{p.X + 1, p.Y - 1},
+		{p.X + 1, p.Y},
+		{p.X + 1, p.Y + 1},
+	}
+}
+
+type PointSet map[Point]struct{}
+
+func NewPointSet() PointSet {
+	return make(PointSet)
+}
+
+func (s PointSet) Add(p Point) {
+	s[p] = struct{}{}
+}
+
+func (s PointSet) Has(p Point) bool {
+	_, exists := s[p]
+	return exists
+}
+
+func (s PointSet) Size() int {
+	return len(s)
+}
+
+func (s PointSet) Remove(p Point) {
+	delete(s, p)
+}
