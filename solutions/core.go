@@ -47,26 +47,3 @@ func (p Point) GetNeighbors8() []Point {
 		{p.X + 1, p.Y + 1},
 	}
 }
-
-type PointSet map[Point]struct{}
-
-func NewPointSet() PointSet {
-	return make(PointSet)
-}
-
-func (s PointSet) Add(p Point) {
-	s[p] = struct{}{}
-}
-
-func (s PointSet) Has(p Point) bool {
-	_, exists := s[p]
-	return exists
-}
-
-func (s PointSet) Size() int {
-	return len(s)
-}
-
-func (s PointSet) Remove(p Point) {
-	delete(s, p)
-}

@@ -1,6 +1,7 @@
 package solutions
 
 import (
+	"aoc2025/ext"
 	"strconv"
 	"strings"
 )
@@ -11,8 +12,8 @@ func (d Day04) Day() string {
 	return "04"
 }
 
-func parse04(input string) PointSet {
-	set := NewPointSet()
+func parse04(input string) *ext.Set[Point] {
+	set := ext.New[Point]()
 	lines := strings.Split(input, "\n")
 	for i, line := range lines {
 		for j, ch := range line {
@@ -25,13 +26,13 @@ func parse04(input string) PointSet {
 	return set
 }
 
-func getToRemove(set PointSet) PointSet {
-	toRemove := NewPointSet()
-	for p := range set {
+func getToRemove(set *ext.Set[Point]) *ext.Set[Point] {
+	toRemove := ext.New[Point]()
+	for p := range set.All() {
 		ns := p.GetNeighbors8()
 		nsCount := 0
 		for _, n := range ns {
-			if _, exists := set[n]; exists {
+			if set.Has(n) {
 				nsCount++
 			}
 		}
@@ -61,7 +62,7 @@ func (d Day04) Execute2(input string) string {
 			break
 		}
 		counter += toRemove.Size()
-		for p := range toRemove {
+		for p := range toRemove.All() {
 			set.Remove(p)
 		}
 	}
