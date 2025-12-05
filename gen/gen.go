@@ -47,6 +47,7 @@ func genDayFile(next string) {
 
 	text := string(bytes)
 	output := strings.ReplaceAll(text, "Day00", "Day"+next)
+	output = strings.ReplaceAll(output, "return \"00\"", fmt.Sprintf("return \"%s\"", next))
 
 	err = os.WriteFile("../solutions/day"+next+".go", []byte(output), 0644)
 	if err != nil {

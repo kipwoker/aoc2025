@@ -1,5 +1,7 @@
 package solutions
 
+import "sort"
+
 type Solution interface {
 	Day() string
 	Execute1(input string) string
@@ -46,4 +48,55 @@ func (p Point) GetNeighbors8() []Point {
 		{p.X + 1, p.Y},
 		{p.X + 1, p.Y + 1},
 	}
+}
+
+type Interval struct {
+	Start, End int
+}
+
+func (iv Interval) Inside(value int) bool {
+	return iv.Start <= value && value <= iv.End
+}
+func (iv Interval) Overlaps(other Interval) bool {
+	return iv.Start <= other.End && other.Start <= iv.End
+}
+func (iv Interval) Merge(other Interval) Interval {
+	return Interval{
+		Start: min(iv.Start, other.Start),
+		End:   max(iv.End, other.End),
+	}
+}
+func CollapseIntervals(intervals []Interval) []Interval {
+	if len(intervals) == 0 {
+		return intervals
+	}
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i].Start < intervals[j].Start
+	})
+
+	ints := intervals
+	result := []Interval{}
+
+	for {
+		mergesCount := 0
+		cursor := ints[0]
+		for i := 1; i < len(ints); i++ {
+			if cursor.Overlaps(ints[i]) {
+				cursor = cursor.Merge(ints[i])
+			} else {
+				result = append(result, cursor)
+				cursor = ints[i]
+			}
+		}
+		result = append(result, cursor)
+
+		if mergesCount == 0 {
+			break
+		}
+
+		ints = result
+		result = []Interval{}
+	}
+
+	return result
 }
