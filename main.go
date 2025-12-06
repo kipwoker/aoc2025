@@ -26,6 +26,7 @@ var solutionImpls = []solutions.Solution{
 	solutions.Day03{},
 	solutions.Day04{},
 	solutions.Day05{},
+	solutions.Day06{},
 }
 
 func main() {
