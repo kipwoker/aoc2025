@@ -1,6 +1,9 @@
 package ext
 
-import "iter"
+import (
+	"fmt"
+	"iter"
+)
 
 type Set[T comparable] struct {
 	m map[T]struct{}
@@ -43,4 +46,31 @@ func (s *Set[T]) All() iter.Seq[T] {
 			}
 		}
 	}
+}
+
+func (s *Set[T]) FromSlice(values []T) {
+	for _, v := range values {
+		s.Add(v)
+	}
+}
+
+func (s *Set[T]) Copy() *Set[T] {
+	ns := New[T]()
+	for v := range s.m {
+		ns.Add(v)
+	}
+	return ns
+}
+
+func (set *Set[T]) Print() {
+	fmt.Print("Set contents: [")
+	first := true
+	for v := range set.All() {
+		if !first {
+			fmt.Print(", ")
+		}
+		fmt.Print(v)
+		first = false
+	}
+	fmt.Println("]")
 }

@@ -27,6 +27,7 @@ var solutionImpls = []solutions.Solution{
 	solutions.Day04{},
 	solutions.Day05{},
 	solutions.Day06{},
+	solutions.Day07{},
 }
 
 func main() {
@@ -34,10 +35,12 @@ func main() {
 	day := ""       // last by default
 	label := "real" // test | real
 
-	printLogo()
-
 	if day == "" {
 		day = solutionImpls[len(solutionImpls)-1].Day()
+	}
+
+	if day == "00" {
+		printLogo()
 	}
 
 	filePath := fmt.Sprintf("inputs/%s.%s.txt", day, label)

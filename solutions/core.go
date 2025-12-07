@@ -1,6 +1,9 @@
 package solutions
 
-import "sort"
+import (
+	"container/list"
+	"sort"
+)
 
 type Solution interface {
 	Day() string
@@ -99,4 +102,37 @@ func CollapseIntervals(intervals []Interval) []Interval {
 	}
 
 	return result
+}
+
+type Queue[T any] struct {
+	l *list.List
+}
+
+func NewQueue[T any]() *Queue[T] {
+	return &Queue[T]{l: list.New()}
+}
+
+func (q *Queue[T]) Enqueue(v T) {
+	q.l.PushBack(v)
+}
+
+func (q *Queue[T]) Dequeue() (T, bool) {
+	var zero T
+
+	e := q.l.Front()
+	if e == nil {
+		return zero, false
+	}
+
+	v, ok := e.Value.(T)
+	if !ok {
+		return zero, false
+	}
+
+	q.l.Remove(e)
+	return v, true
+}
+
+func (q *Queue[T]) Len() int {
+	return q.l.Len()
 }
