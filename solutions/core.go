@@ -3,12 +3,18 @@ package solutions
 import (
 	"container/list"
 	"sort"
+	"strconv"
 )
 
 type Solution interface {
 	Day() string
 	Execute1(input string) string
 	Execute2(input string) string
+}
+
+func parseInt(x string) int {
+	val, _ := strconv.Atoi(x)
+	return val
 }
 
 func abs(x int) int {
@@ -135,4 +141,40 @@ func (q *Queue[T]) Dequeue() (T, bool) {
 
 func (q *Queue[T]) Len() int {
 	return q.l.Len()
+}
+
+// UF
+type UnionFind struct {
+	parent []int
+	size   []int
+}
+
+func NewUnionFind(n int) *UnionFind {
+	parent := make([]int, n)
+	size := make([]int, n)
+	for i := range n {
+		parent[i] = i
+		size[i] = 1
+	}
+	return &UnionFind{parent: parent, size: size}
+}
+
+func (uf *UnionFind) Find(a int) int {
+	if uf.parent[a] != a {
+		uf.parent[a] = uf.Find(uf.parent[a])
+	}
+	return uf.parent[a]
+}
+
+func (uf *UnionFind) Union(a, b int) {
+	ra := uf.Find(a)
+	rb := uf.Find(b)
+	if ra == rb {
+		return
+	}
+	if uf.size[ra] < uf.size[rb] {
+		ra, rb = rb, ra
+	}
+	uf.parent[rb] = ra
+	uf.size[ra] += uf.size[rb]
 }
