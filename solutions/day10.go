@@ -267,8 +267,7 @@ func (d Day10) Execute1(input string) string {
 
 	sum := 0
 	for _, s := range schemes {
-		//sum += findFastWay(s)
-		sum += s.Buttons[0][0]
+		sum += findFastWay(s)
 	}
 
 	return strconv.Itoa(sum)
