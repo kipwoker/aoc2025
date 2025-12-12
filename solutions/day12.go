@@ -3,6 +3,7 @@ package solutions
 import (
 	"aoc2025/ext"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -130,7 +131,7 @@ func (d Day12) Execute1(input string) string {
 	println("Min", len(minIdxs))
 	printSlice(minIdxs)
 
-	return "Not Implemented: Part 1"
+	return strconv.Itoa(len(maxIdxs))
 }
 
 func (d Day12) Execute2(input string) string {
