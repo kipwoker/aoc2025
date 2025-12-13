@@ -96,6 +96,15 @@ func sum(cs []int) int {
 	return sum
 }
 
+func getTotal(counts []int, figures []ext.Set[Point]) int {
+	total := 0
+	for i := 0; i < len(counts); i++ {
+		total += counts[i] * figures[i].Size()
+	}
+
+	return total
+}
+
 // if field big enough, no need to place figures, they are cool
 func getMaxFieldIndexes(in FigureInput) []int {
 	indexes := []int{}
@@ -112,7 +121,7 @@ func getMaxFieldIndexes(in FigureInput) []int {
 func getMinFieldIndexes(in FigureInput) []int {
 	indexes := []int{}
 	for i, f := range in.Fields {
-		if f.M*f.N < in.MinSize*sum(f.Counts) {
+		if f.M*f.N < getTotal(f.Counts, in.Figures) {
 			indexes = append(indexes, i)
 		}
 	}
@@ -125,11 +134,11 @@ func (d Day12) Execute1(input string) string {
 	println("MinSize", in.MinSize, "MaxSize", in.MaxSize)
 
 	maxIdxs := getMaxFieldIndexes(in)
-	println("Max", len(maxIdxs))
-	printSlice(maxIdxs)
+	println("Can fit", len(maxIdxs))
 	minIdxs := getMinFieldIndexes(in)
-	println("Min", len(minIdxs))
-	printSlice(minIdxs)
+	println("Cannot fit", len(minIdxs))
+
+	println("All covered", len(maxIdxs)+len(minIdxs) == len(in.Fields))
 
 	return strconv.Itoa(len(maxIdxs))
 }
